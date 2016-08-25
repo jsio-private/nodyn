@@ -19,9 +19,9 @@
 module = (typeof module == 'undefined') ? {} :  module;
 
 (function() {
-  var System  = java.lang.System,
-      Scanner = java.util.Scanner,
-      File    = java.io.File;
+  var System  = ClassHelpers.getClass('java.lang.System'),
+      Scanner = ClassHelpers.getClass('java.util.Scanner'),
+      File    = ClassHelpers.getClass('java.io.File');
 
   function Module(id, parent) {
     this.id = id;
@@ -113,7 +113,7 @@ module = (typeof module == 'undefined') ? {} :  module;
     if ( paths === '' ) {
       return [];
     }
-    var osName = java.lang.System.getProperty("os.name").toLowerCase();
+    var osName = ClassHelpers.getClass('java.lang.System').getProperty("os.name").toLowerCase();
     var separator;
 
     if ( osName.indexOf( 'win' ) >= 0 ) {

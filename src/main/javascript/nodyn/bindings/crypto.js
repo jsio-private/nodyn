@@ -37,20 +37,20 @@ function digest(outputEncoding) {
 }
 
 var hashAlgorithms = {
-  'md4':       org.bouncycastle.crypto.digests.MD4Digest,
-  'md5':       org.bouncycastle.crypto.digests.MD5Digest,
-  'sha1':      org.bouncycastle.crypto.digests.SHA1Digest,
-  'sha3':      org.bouncycastle.crypto.digests.SHA3Digest,
-  'sha224':    org.bouncycastle.crypto.digests.SHA224Digest,
-  'sha256':    org.bouncycastle.crypto.digests.SHA256Digest,
-  'sha384':    org.bouncycastle.crypto.digests.SHA384Digest,
-  'sha512':    org.bouncycastle.crypto.digests.SHA512Digest,
-  'ripemd120': org.bouncycastle.crypto.digests.RIPEMD128Digest,
-  'ripemd160': org.bouncycastle.crypto.digests.RIPEMD160Digest,
-  'ripemd256': org.bouncycastle.crypto.digests.RIPEMD256Digest,
-  'ripemd320': org.bouncycastle.crypto.digests.RIPEMD320Digest,
-  'rmd160':    org.bouncycastle.crypto.digests.RIPEMD160Digest,
-  'whirlpool': org.bouncycastle.crypto.digests.WhirlpoolDigest,
+  'md4':       ClassHelpers.getClass('org.bouncycastle.crypto.digests.MD4Digest'),
+  'md5':       ClassHelpers.getClass('org.bouncycastle.crypto.digests.MD5Digest'),
+  'sha1':      ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA1Digest'),
+  'sha3':      ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA3Digest'),
+  'sha224':    ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA224Digest'),
+  'sha256':    ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA256Digest'),
+  'sha384':    ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA384Digest'),
+  'sha512':    ClassHelpers.getClass('org.bouncycastle.crypto.digests.SHA512Digest'),
+  'ripemd120': ClassHelpers.getClass('org.bouncycastle.crypto.digests.RIPEMD128Digest'),
+  'ripemd160': ClassHelpers.getClass('org.bouncycastle.crypto.digests.RIPEMD160Digest'),
+  'ripemd256': ClassHelpers.getClass('org.bouncycastle.crypto.digests.RIPEMD256Digest'),
+  'ripemd320': ClassHelpers.getClass('org.bouncycastle.crypto.digests.RIPEMD320Digest'),
+  'rmd160':    ClassHelpers.getClass('org.bouncycastle.crypto.digests.RIPEMD160Digest'),
+  'whirlpool': ClassHelpers.getClass('org.bouncycastle.crypto.digests.WhirlpoolDigest'),
 };
 
 function Hash(algorithm) {
@@ -97,9 +97,9 @@ Hmac.prototype.digest = digest;
 
 module.exports.Hmac = Hmac;
 
-var engines  = org.bouncycastle.crypto.engines;
-var modes    = org.bouncycastle.crypto.modes;
-var paddings = org.bouncycastle.crypto.paddings;
+var engines  = ClassHelpers.getClass('org.bouncycastle.crypto.engines');
+var modes    = ClassHelpers.getClass('org.bouncycastle.crypto.modes');
+var paddings = ClassHelpers.getClass('org.bouncycastle.crypto.paddings');
 
 function cbc(cipher) {
   return new modes.CBCBlockCipher(cipher);
@@ -115,7 +115,7 @@ function ecb(cipher) {
 }
 
 function buffered(cipher) {
-  return new org.bouncycastle.crypto.BufferedBlockCipher( cipher );
+  return new ClassHelpers.getClass('org.bouncycastle.crypto.BufferedBlockCipher')( cipher );
 }
 
 function pkcs7(cipher) {

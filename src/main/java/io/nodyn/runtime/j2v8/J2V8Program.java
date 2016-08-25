@@ -24,7 +24,7 @@ public class J2V8Program implements Program {
 	@Override
 	public Object execute(Object context) {
 		try {
-			return ((V8) context).executeStringScript(source);
+			return ((V8) context).executeScript(source);
 		} catch (Exception ex) {
 			Logger.getLogger(J2V8Program.class.getName()).log(Level.SEVERE, null, ex);
 		}

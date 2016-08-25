@@ -20,9 +20,9 @@ var nodyn       = require('nodyn'),
     blocking    = require('nodyn/blocking'),
     StatWatcher = process.binding('stat_watcher').StatWatcher,
     posix       = process._posix,
-    Errno       = Packages.jnr.constants.platform.Errno,
-    File        = Packages.java.io.File,
-    Fs          = Packages.io.nodyn.fs.Fs,
+    Errno       = ClassHelpers.getClass('jnr.constants.platform.Errno'),
+    File        = ClassHelpers.getClass('java.io.File'),
+    Fs          = ClassHelpers.getClass('io.nodyn.fs.Fs'),
     binding     = module.exports,
     statsCtor   = null;
 

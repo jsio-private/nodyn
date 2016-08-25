@@ -35,7 +35,7 @@ COUNTER_HTTP_CLIENT_RESPONSE = function() {};
 Number.isFinite = isFinite;
 
 (function(javaProcess){
-  var System = java.lang.System;
+  var System = ClassHelpers.getClass('java.lang.System');
 
   function Process(process) {
     this._process = process;
@@ -61,7 +61,7 @@ Number.isFinite = isFinite;
     };
 
     this.hrtime = function(tuple) {
-      var nano = java.lang.System.nanoTime(),
+      var nano = System.nanoTime(),
           nanosPerSec = 1000000000;
 
       if (typeof tuple !== 'undefined') { 
@@ -72,7 +72,7 @@ Number.isFinite = isFinite;
         nano -= (tuple[0] * nanosPerSec) + tuple[1];
       }
       return [
-        java.lang.Math.floor( nano / nanosPerSec ),
+        ClassHelpers.getClass('java.lang.Math').floor( nano / nanosPerSec ),
         nano % nanosPerSec
       ]; // seconds/nanoseconds tuple
     };
@@ -101,7 +101,7 @@ Number.isFinite = isFinite;
 
     this.chdir = function(path) {
       var cwd = require('path').resolve(path);
-      var f = new java.io.File(cwd);
+      var f = new ClassHelpers.getClass('java.io.File')(cwd);
       if (f.exists()) {
         this._cwd = cwd;
         return true;
@@ -169,16 +169,16 @@ Number.isFinite = isFinite;
       this.env[envName] = envVal;
     }
     if (!this.env.TMPDIR) {
-      this.env.TMPDIR = java.lang.System.getProperty('java.io.tmpdir');
+      this.env.TMPDIR = System.getProperty('java.io.tmpdir');
     }
     this.env.TEMP = this.env.TMPDIR;
     this.env.TMP = this.env.TMPDIR;
 
     this.arch = this._process.arch();
     this.platform = this._process.platform();
-    this.version = Packages.io.nodyn.Nodyn.VERSION;
+    this.version = ClassHelpers.getClass('io.nodyn.Nodyn').VERSION;
     this.versions = {
-      node: Packages.io.nodyn.Nodyn.VERSION,
+      node: ClassHelpers.getClass('io.nodyn.Nodyn').VERSION,
       java: System.getProperty('java.version')
     };
 
@@ -186,7 +186,7 @@ Number.isFinite = isFinite;
     this.title = 'Nodyn'; 
 
     this.memoryUsage = function() {
-      var rt = java.lang.Runtime.getRuntime();
+      var rt = ClassHelpers.getClass('java.lang.Runtime').getRuntime();
       return {
         heapTotal: rt.totalMemory(),
         heapUsed: rt.totalMemory() - rt.freeMemory(),

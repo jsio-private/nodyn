@@ -16,7 +16,7 @@
 
 "use strict";
 
-var NativesWrap = Java.type('io.nodyn.natives.NativesWrap');
+var NativesWrap = ClassHelpers.getClass('io.nodyn.natives.NativesWrap');
 
 var source = {};
 

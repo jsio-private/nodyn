@@ -1,5 +1,5 @@
 var isWindows = process.platform === 'win32';
-var osBean = java.lang.management.ManagementFactory.getOperatingSystemMXBean();
+var osBean = ClassHelpers.getClass('java.lang.management.ManagementFactory').getOperatingSystemMXBean();
 
 module.exports = exports = {};
 
@@ -8,7 +8,7 @@ exports.getEndianness = function() {
 };
 
 exports.getHostname = function() {
-  return java.net.InetAddress.getLocalHost().getHostName();
+  return ClassHelpers.getClass('java.net.InetAddress').getLocalHost().getHostName();
 };
 
 exports.getLoadAvg = function() {
@@ -16,27 +16,27 @@ exports.getLoadAvg = function() {
 	// http://nodejs.org/api/os.html#os_os_loadavg - windows always returns [0, 0, 0]
 	return [0, 0, 0];	
   } else {
-    avg = java.lang.management.ManagementFactory.getOperatingSystemMXBean().getSystemLoadAverage();
+    avg = ClassHelpers.getClass('java.lang.management.ManagementFactory').getOperatingSystemMXBean().getSystemLoadAverage();
     // node.js likes 1/5/15 minute averages -  we'll just do one 3x
     return [avg, avg, avg];
   }
 };
 
 exports.getUptime = function() {
-  return java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime();
+  return java.ClassHelpers.getClass('java.lang.management.ManagementFactory').getRuntimeMXBean().getUptime();
 };
 
 exports.getFreeMem = function() {
-  return java.lang.Runtime.getRuntime().freeMemory();
+  return ClassHelpers.getClass('java.lang.Runtime').getRuntime().freeMemory();
 };
 
 exports.getTotalMem = function() {
-  return java.lang.Runtime.getRuntime().totalMemory();
+  return ClassHelpers.getClass('java.lang.Runtime').getRuntime().totalMemory();
 };
 
 exports.getCPUs = function() {
   var cores = [];
-  var num = java.lang.Runtime.getRuntime().availableProcessors();
+  var num = ClassHelpers.getClass('java.lang.Runtime').getRuntime().availableProcessors();
   for (var i = 0; i < num; i++) {
     var details = {
       model: "unknown",
@@ -63,7 +63,7 @@ exports.getOSRelease = function() {
 };
 
 exports.getInterfaceAddresses = function() {
-  var interfaces = java.net.NetworkInterface.getNetworkInterfaces();
+  var interfaces = ClassHelpers.getClass('java.net.NetworkInterface').getNetworkInterfaces();
   var ifs = {};
 
   while (interfaces.hasMoreElements()) {
