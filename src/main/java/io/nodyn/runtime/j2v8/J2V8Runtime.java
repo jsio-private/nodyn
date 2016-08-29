@@ -49,6 +49,8 @@ public class J2V8Runtime extends Nodyn {
         try {
             nativeRequire = compileNative(NATIVE_REQUIRE);
             nativeRequire.execute(engine.getRuntime());
+			
+			System.out.println("done executing nativeRequire");
         } catch (Exception ex) {
             Logger.getLogger(J2V8Runtime.class.getName()).log(Level.SEVERE, "Failed to load " + NATIVE_REQUIRE, ex);
             System.exit(255);
@@ -59,6 +61,8 @@ public class J2V8Runtime extends Nodyn {
     public Object loadBinding(String name) {
         try {
             String pathName = "nodyn/bindings/" + name + ".js";
+			
+			System.out.println("loading binding..");
             return engine.getRuntime().executeScript("_native_require('" + pathName + "');");
         } catch (Exception e) {
             this.handleThrowable(e);
@@ -118,7 +122,9 @@ public class J2V8Runtime extends Nodyn {
 
             // Invoke the node function
             JSObject nodeFunction = (JSObject) compileNative(NODE_JS).execute(v8);
+			System.out.println("calling node function");
             nodeFunction.call(nodeFunction, jsProcess);
+			System.out.println("done node func");
         } catch (ScriptException ex) {
             Logger.getLogger(J2V8Runtime.class.getName()).log(Level.SEVERE, "Cannot initialize", ex);
         }
