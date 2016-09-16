@@ -84,20 +84,23 @@ public class EventLoop implements RefCounted {
     }
 
     public Future<?> submitUserTask(final Runnable task, String name) {
-        final RefHandle handle = newHandle("user-task#" + name );
-        this.taskCounter.incrementAndGet();
-        return this.userTaskExecutor.submit(() -> {
-            try {
-                task.run();
-            } finally {
-                try {
-                    taskComplete();
-                } catch (Throwable t) {
-                    EventLoop.this.process.getNodyn().handleThrowable(t);
-                }
-            }
-            handle.unref();
-        });
+//        final RefHandle handle = newHandle("user-task#" + name );
+//        this.taskCounter.incrementAndGet();
+		task.run();
+//		taskComplete();
+		return null;
+//        return this.userTaskExecutor.submit(() -> {
+//            try {
+//                task.run();
+//            } finally {
+//                try {
+//                    taskComplete();
+//                } catch (Throwable t) {
+//                    EventLoop.this.process.getNodyn().handleThrowable(t);
+//                }
+//            }
+//            handle.unref();
+//        });
     }
 
     private void taskComplete() {

@@ -152,7 +152,7 @@ module = (typeof module == 'undefined') ? {} :  module;
 
   function resolveCoreModule(id, root) {
     var name = normalizeName(id);
-    if (__nodyn.configuration.classLoader.findResource(name)) 
+    if (__nodyn.getConfiguration().getClassLoader().findResource(name)) 
       return name;
     return null;
   }
@@ -168,7 +168,7 @@ module = (typeof module == 'undefined') ? {} :  module;
   function readFile(filename) {
     var input;
     try {
-      input = __nodyn.configuration.classLoader.getResourceAsStream(filename);
+      input = __nodyn.getConfiguration().getClassLoader().getResourceAsStream(filename);
       // TODO: I think this is not very efficient
       return new Scanner(input).useDelimiter("\\A").next();
     } catch(e) {

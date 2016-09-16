@@ -54,7 +54,7 @@ Number.isFinite = isFinite;
       }
     });
 
-    this.context = this._process.vertx;
+    this.context = this._process.getVertx();
 
     this.binding = function(name) {
       return this._process.binding(name);
@@ -119,30 +119,30 @@ Number.isFinite = isFinite;
       } );
     }.bind(this);
 
-    var config = this._process.nodyn.configuration;
+    var config = this._process.getNodyn().getConfiguration();
 
-    if ( config.evalString ) {
-      readOnlyProperty( "_eval", config.evalString );
+    if ( config.getEvalString() ) {
+      readOnlyProperty( "_eval", config.getEvalString() );
     }
 
-    if ( config.print ) {
+    if ( config.getPrint() ) {
       readOnlyProperty( "_print_eval", true );
     }
 
-    if ( config.interactive ) {
+    if ( config.getInteractive() ) {
       readOnlyProperty( "_force_repl", true );
     }
 
-    if ( config.noDeprecation ) {
-      readOnlyProperty( "noDeprecation", config.noDeprecation );
+    if ( config.getNoDeprecation() ) {
+      readOnlyProperty( "noDeprecation", config.getNoDeprecation() );
     }
 
-    if ( config.traceDeprecation ) {
-      readOnlyProperty( "traceDeprecation", config.traceDeprecation );
+    if ( config.getTraceDeprecation() ) {
+      readOnlyProperty( "traceDeprecation", config.getTraceDeprecation() );
     }
 
-    if ( config.throwDeprecation ) {
-      readOnlyProperty( "throwDeprecation", config.throwDeprecation );
+    if ( config.getThrowDeprecation() ) {
+      readOnlyProperty( "throwDeprecation", config.getThrowDeprecation() );
     }
 
 
@@ -153,9 +153,11 @@ Number.isFinite = isFinite;
 
     var execArgv = config.execArgv;
 
-    for ( i = 0 ; i < execArgv.length; ++i ) {
-      this.argv.push( execArgv[i] );
-    }
+	if (execArgv) {
+      for ( i = 0 ; i < execArgv.length; ++i ) {
+        this.argv.push( execArgv[i] );
+      }
+	}
 
 
     this.env = {};
@@ -174,7 +176,7 @@ Number.isFinite = isFinite;
     this.env.TEMP = this.env.TMPDIR;
     this.env.TMP = this.env.TMPDIR;
 
-    this.arch = this._process.arch();
+    this.arch = this._process.arch;
     this.platform = this._process.platform();
     this.version = ClassHelpers.getClass('io.nodyn.Nodyn').VERSION;
     this.versions = {
