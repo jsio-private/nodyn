@@ -65,12 +65,7 @@ public class J2V8Runtime extends Nodyn {
 	public Object loadBinding(String name) {
 		try {
 			String pathName = "nodyn/bindings/" + name + ".js";
-
-			System.out.println("loading binding.. "+name);
 			Object ret = engine.getRuntime().executeScript("_native_require('" + pathName + "');");
-			
-			
-			System.out.println("returning binding "+ret.getClass());
 			return ret;
 		} catch (Exception e) {
 			this.handleThrowable(e);
@@ -82,7 +77,7 @@ public class J2V8Runtime extends Nodyn {
 	public Program compile(String source, String fileName, boolean displayErrors) throws Throwable {
 		// TODO: do something with the displayErrors parameter
 		try {
-			Program program = new J2V8Program(source, fileName);
+			Program program = new J2V8Program(engine.getRuntime(), source, fileName);
 			return program;
 		} catch (Exception ex) {
 			Logger.getLogger(J2V8Runtime.class.getName()).log(Level.SEVERE, "Cannot compile script " + fileName, ex);
@@ -93,6 +88,10 @@ public class J2V8Runtime extends Nodyn {
 
 	@Override
 	public void makeContext(Object init) {
+//		j2v
+		engine.getRuntime().registerV8Executor(null, null);
+		System.out.println("make context to " + init);
+		System.exit(-1);
 	}
 
 	@Override
@@ -139,7 +138,6 @@ public class J2V8Runtime extends Nodyn {
 			V8Function nodeFunction = (V8Function) compileNative(NODE_JS).execute(v8);
 			
 			V8Object returnedProcess = (V8Object) processFunction.call(v8, new V8Array(v8).push(jsProcess));
-			
 			nodeFunction.call(v8, new V8Array(v8).push(returnedProcess));
 //			
 //			V8Array args = new V8Array(v8);
@@ -175,7 +173,7 @@ public class J2V8Runtime extends Nodyn {
 		try {
 			final InputStreamReader is = new InputStreamReader(getConfiguration().getClassLoader().getResourceAsStream(fileName));
 			String source = CharStreams.toString(is);
-			return new J2V8Program(source, fileName);
+			return new J2V8Program(engine.getRuntime(), source, fileName);
 		} catch (IOException ex) {
 			throw new ScriptException(ex);
 		}
