@@ -153,7 +153,7 @@ module.exports.setupBufferJS = function(target, internal) {
 
   // TODO: remove this
   target.prototype._vertxBuffer = function() {
-    return new ClassHelpers.getClass('org.vertx.java.core.buffer.Buffer')( this._rawBuffer() );
+    return new (ClassHelpers.getClass('org.vertx.java.core.buffer.Buffer'))( this._rawBuffer() );
   };
 
 

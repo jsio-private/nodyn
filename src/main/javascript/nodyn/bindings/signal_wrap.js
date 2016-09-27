@@ -17,8 +17,10 @@
 var util = require('util');
 var Handle = process.binding('handle_wrap').Handle;
 
+var SignalWrap =  ClassHelpers.getClass("io.nodyn.process.SignalWrap");
+
 function Signal() {
-  this._signal = new Packages.io.nodyn.process.SignalWrap( process._process );
+  this._signal = new SignalWrap( process._process );
   Handle.call( this, this._signal );
 }
 

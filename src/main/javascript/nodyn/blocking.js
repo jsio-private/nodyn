@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var blocking = new ClassHelpers.getClass('io.nodyn.loop.Blocking')(process.EVENT_LOOP);
+var blocking = new (ClassHelpers.getClass('io.nodyn.loop.Blocking'))(process.EVENT_LOOP);
 
 module.exports.submit = function(task) {
   blocking.submit( task );

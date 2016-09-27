@@ -19,13 +19,15 @@
 var util = require('util');
 var Stream = process.binding('stream_wrap').Stream;
 
+var TCPWrap = ClassHelpers.getClass("io.nodyn.tcp.TCPWrap");
+
 function TCP(tcp) {
-  if ( tcp instanceof Packages.io.nodyn.tcp.TCPWrap ) {
+  if ( tcp.__javaClass && tcp.__javaClass === "io.nodyn.tcp.TCPWrap" ) {
     this._tcp = tcp;
-  } else if ( typeof tcp == 'number' ) {
-    this._tcp = new Packages.io.nodyn.tcp.TCPWrap( process._process, tcp );
+  } else if ( typeof tcp === 'number' ) {
+    this._tcp = new TCPWrap( process._process, tcp );
   } else {
-    this._tcp = new Packages.io.nodyn.tcp.TCPWrap( process._process );
+    this._tcp = new TCPWrap( process._process );
   }
 
   // Server

@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+var SyncProcessWrap =  ClassHelpers.getClass("io.nodyn.process.SyncProcessWrap");
+
 function spawn(options) {
-  var proc = new Packages.io.nodyn.process.SyncProcessWrap( process._process );
+  var proc = new SyncProcessWrap( process._process );
   var status = proc.spawn( options.files, options.args );
   var result = {
     pid: proc.pid,

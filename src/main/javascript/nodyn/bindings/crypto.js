@@ -62,7 +62,7 @@ function Hash(algorithm) {
     throw new Error( "Digest method not supported" );
   }
 
-  this._delegate = new Packages.io.nodyn.crypto.Hash( new algo() );
+  this._delegate = new (ClassHelpers.getClass("io.nodyn.crypto.Hash"))( new algo() );
 }
 
 Hash.prototype.update = update;
@@ -89,7 +89,7 @@ Hmac.prototype.init = function(algorithm, key) {
     throw new Error( "Digest method not supported " + algorithm );
   }
 
-  this._delegate = new Packages.io.nodyn.crypto.Hmac( new algo(), key._rawBuffer() );
+  this._delegate = new (ClassHelpers.getClass("io.nodyn.crypto.Hmac"))( new algo(), key._rawBuffer() );
 };
 
 Hmac.prototype.update = update;
@@ -115,7 +115,7 @@ function ecb(cipher) {
 }
 
 function buffered(cipher) {
-  return new ClassHelpers.getClass('org.bouncycastle.crypto.BufferedBlockCipher')( cipher );
+  return new (ClassHelpers.getClass('org.bouncycastle.crypto.BufferedBlockCipher'))( cipher );
 }
 
 function pkcs7(cipher) {
@@ -264,7 +264,7 @@ registerCipher( 'seed-cbc', 128, 16, seed_cbc );
 registerCipher( 'seed-ecb', 128, 0,  seed_ecb );
 
 function generateKeyIv(password, algo) {
-  return new Packages.io.nodyn.crypto.OpenSSLKDF( password._rawBuffer(), algo.keyLen, algo.ivLen );
+  return new (ClassHelpers.getClass("io.nodyn.crypto.OpenSSLKDF"))( password._rawBuffer(), algo.keyLen, algo.ivLen );
 }
 
 function CipherBase(encipher){
@@ -291,7 +291,7 @@ CipherBase.prototype.initiv = function(cipher, key, iv) {
     throw new Error( "Cipher method not supported" );
   }
 
-  this._delegate = new Packages.io.nodyn.crypto.Cipher( this._encipher, algo.factory(), key._rawBuffer(), iv._rawBuffer() );
+  this._delegate = new (ClassHelpers.getClass("io.nodyn.crypto.Cipher"))( this._encipher, algo.factory(), key._rawBuffer(), iv._rawBuffer() );
 };
 
 
@@ -316,7 +316,7 @@ var signatureAlgorithms = {
 };
 
 function Sign() {
-  this._delegate = new Packages.io.nodyn.crypto.Sign();
+  this._delegate = new (ClassHelpers.getClass("io.nodyn.crypto.Sign"))();
 }
 
 Sign.prototype.init = function(algorithm) {
@@ -337,7 +337,7 @@ Sign.prototype.sign = function(key, junk, passphrase) {
 module.exports.Sign = Sign;
 
 function Verify() {
-  this._delegate = new Packages.io.nodyn.crypto.Verify();
+  this._delegate = new (ClassHelpers.getClass("io.nodyn.crypto.Verify"))();
 }
 
 Verify.prototype.init = function(algorithm) {
@@ -369,7 +369,7 @@ function pbkdf2(password, salt, iterations, keylen, digest, callback) {
 }
 
 function pbkdf2Sync(password, salt, iterations, keylen, digest) {
-  var key = Packages.io.nodyn.crypto.PBKDF2.pbkdf2( password._rawBuffer(), salt._rawBuffer(), iterations, keylen );
+  var key = (ClassHelpers.getClass("io.nodyn.crypto.PBKDF2")).pbkdf2( password._rawBuffer(), salt._rawBuffer(), iterations, keylen );
   return process.binding('buffer').createBuffer( key );
 }
 
@@ -383,7 +383,7 @@ module.exports.PBKDF2 = function(password, salt, iterations, keylen, digest, cal
 
 function randomBytes(size, callback) {
   blocking.submit( function() {
-    var ret = Packages.io.nodyn.crypto.RandomGenerator.random(size);
+    var ret = (ClassHelpers.getClass("io.nodyn.crypto.RandomGenerator")).random(size);
     ret = process.binding('buffer').createBuffer(ret);
     blocking.unblock( function() {
       callback( null, ret );
@@ -392,12 +392,12 @@ function randomBytes(size, callback) {
 }
 
 function randomBytesSync(size) {
-  return Packages.io.nodyn.crypto.RandomGenerator.random( size );
+  return (ClassHelpers.getClass("io.nodyn.crypto.RandomGenerator")).random( size );
 }
 
 function pseudoRandomBytes(size, callback) {
   blocking.submit( function() {
-    var ret = Packages.io.nodyn.crypto.RandomGenerator.pseudoRandom(size);
+    var ret = (ClassHelpers.getClass("io.nodyn.crypto.RandomGenerator")).pseudoRandom(size);
     ret = process.binding('buffer').createBuffer(ret);
     blocking.unblock( function() {
       callback( null, ret );
@@ -406,7 +406,7 @@ function pseudoRandomBytes(size, callback) {
 }
 
 function pseudoRandomBytesSync(size) {
-  return Packages.io.nodyn.crypto.RandomGenerator.pseudoRandom( size );
+  return (ClassHelpers.getClass("io.nodyn.crypto.RandomGenerator")).pseudoRandom( size );
 }
 
 module.exports.randomBytes = function(size, callback) {
@@ -430,7 +430,7 @@ module.exports.pseudoRandomBytes = function(size, callback) {
 };
 
 function SecureContext() {
-  this._context = new Packages.io.nodyn.crypto.SecureContext();
+  this._context = new (ClassHelpers.getClass("io.nodyn.crypto.SecureContext"))();
 }
 
 SecureContext.prototype.init = function(secureProtocol) {
@@ -482,10 +482,10 @@ function DiffieHellman(sizeOrKey, generator) {
   }
 
   if ( typeof sizeOrKey == 'number' ) {
-    this._dh = new Packages.io.nodyn.crypto.dh.DiffieHellman( sizeOrKey, generator );
+    this._dh = new (ClassHelpers.getClass("io.nodyn.crypto.dh.DiffieHellman"))( sizeOrKey, generator );
   } else {
     var keyBuf = sizeOrKey._rawBuffer();
-    this._dh = new Packages.io.nodyn.crypto.dh.DiffieHellman( keyBuf, generator );
+    this._dh = new (ClassHelpers.getClass("io.nodyn.crypto.dh.DiffieHellman"))( keyBuf, generator );
   }
 }
 
@@ -503,7 +503,7 @@ function DiffieHellmanGroup(name) {
   if ( ! ( this instanceof DiffieHellmanGroup ) ) {
     return new DiffieHellmanGroup(name);
   }
-  this._dh = new Packages.io.nodyn.crypto.dh.DiffieHellman( name );
+  this._dh = new (ClassHelpers.getClass("io.nodyn.crypto.dh.DiffieHellman"))( name );
 }
 
 module.exports.DiffieHellmanGroup = DiffieHellmanGroup;

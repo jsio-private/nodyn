@@ -18,8 +18,10 @@ var Pipe = process.binding( "pipe_wrap" ).Pipe;
 var Handle = process.binding( "handle_wrap" ).Handle;
 var util = require('util');
 
+var ProcessWrap =  ClassHelpers.getClass("io.nodyn.process.ProcessWrap");
+
 function Process() {
-  this._process = new Packages.io.nodyn.process.ProcessWrap( process._process );
+  this._process = new ProcessWrap( process._process );
   this._process.on( 'exit', Process.prototype._onExit.bind(this) );
   Handle.call( this, this._process );
 }

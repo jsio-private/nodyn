@@ -17,8 +17,10 @@
 var util = require('util');
 var Handle = process.binding('handle_wrap').Handle;
 
+var TimerWrap = ClassHelpers.getClass("io.nodyn.timer.TimerWrap");
+
 function Timer() {
-  this._timer = new Packages.io.nodyn.timer.TimerWrap( process._process );
+  this._timer = new TimerWrap( process._process );
   Handle.call( this, this._timer );
 }
 util.inherits( Timer, Handle );
@@ -31,6 +33,6 @@ Timer.prototype.stop = function() {
   this._timer.stop();
 };
 
-Timer.now = Packages.io.nodyn.timer.TimerWrap.now;
+Timer.now = TimerWrap.now;
 
 module.exports.Timer = Timer;

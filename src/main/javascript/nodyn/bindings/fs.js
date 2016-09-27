@@ -235,6 +235,7 @@ binding.read = function(fd, buffer, offset, length, position, callback) {
       if ( position && position !== -1 ) {
         bytes = Fs.pread(posix, fd, buffer._rawBuffer(), offset, length, position);
       } else {
+		print("read fd ", typeof fd, " rwaBuffer ", typeof buffer._rawBuffer(), " offset ", typeof offset, " length ", typeof length);
         bytes = Fs.read(posix, fd, buffer._rawBuffer(), offset, length);
       }
       blocking.unblock(function() {
@@ -245,6 +246,7 @@ binding.read = function(fd, buffer, offset, length, position, callback) {
     if ( position && position !== -1 ) {
       bytes = Fs.pread(posix, fd, buffer._rawBuffer(), offset, length, position);
     } else {
+		print("read fd ", typeof fd, " rwaBuffer ", typeof buffer._rawBuffer(), " offset ", typeof offset, " length ", typeof length);
       bytes = Fs.read(posix, fd, buffer._rawBuffer(), offset, length);
     }
     if (bytes === -1) throw posixError(fd, 'read');

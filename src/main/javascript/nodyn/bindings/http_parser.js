@@ -16,8 +16,10 @@
 
 var nodyn = require('nodyn');
 
+var HTTPParser = ClassHelpers.getClass("io.nodyn.http.HTTPParser");
+
 function HTTPParser() {
-  this._parser = new Packages.io.nodyn.http.HTTPParser();
+  this._parser = new HTTPParser();
   this._parser.on( 'headersComplete', HTTPParser.prototype._onHeadersComplete.bind(this) );
   this._parser.on( 'body',            HTTPParser.prototype._onBody.bind(this) );
   this._parser.on( 'messageComplete', HTTPParser.prototype._onMessageComplete.bind(this) );
@@ -96,9 +98,9 @@ HTTPParser.kOnHeadersComplete = 1;
 HTTPParser.kOnBody = 2;
 HTTPParser.kOnMessageComplete = 3;
 
-HTTPParser.REQUEST  = Packages.io.nodyn.http.HTTPParser.REQUEST;
-HTTPParser.RESPONSE = Packages.io.nodyn.http.HTTPParser.RESPONSE;
+HTTPParser.REQUEST  = HTTPParser.REQUEST;
+HTTPParser.RESPONSE = HTTPParser.RESPONSE;
 
-HTTPParser.methods  = nodyn.arrayConverter(Packages.io.nodyn.http.HTTPParser.METHODS);
+HTTPParser.methods  = nodyn.arrayConverter(HTTPParser.METHODS);
 
 module.exports.HTTPParser = HTTPParser;

@@ -44,13 +44,13 @@ Number.isFinite = isFinite;
 
     Object.defineProperty( this, "EVENT_LOOP", {
       get: function() {
-        return this._process.eventLoop;
+        return this._process.getEventLoop();
       }
     });
 
     Object.defineProperty( this, "pid", {
       get: function() {
-        return this._process.pid;
+        return this._process.getPid();
       }
     });
 
@@ -101,7 +101,7 @@ Number.isFinite = isFinite;
 
     this.chdir = function(path) {
       var cwd = require('path').resolve(path);
-      var f = new ClassHelpers.getClass('java.io.File')(cwd);
+      var f = new (ClassHelpers.getClass('java.io.File'))(cwd);
       if (f.exists()) {
         this._cwd = cwd;
         return true;
@@ -110,7 +110,7 @@ Number.isFinite = isFinite;
     };
 
 
-    this.execPath = this._process.execPath;
+    this.execPath = this._process.getExecPath();
     this.execArgv = [];
 
     readOnlyProperty = function(name, value) {
@@ -176,7 +176,7 @@ Number.isFinite = isFinite;
     this.env.TEMP = this.env.TMPDIR;
     this.env.TMP = this.env.TMPDIR;
 
-    this.arch = this._process.arch;
+    this.arch = this._process.arch();
     this.platform = this._process.platform();
     this.version = ClassHelpers.getClass('io.nodyn.Nodyn').VERSION;
     this.versions = {
@@ -197,7 +197,7 @@ Number.isFinite = isFinite;
     };
 
     this.reallyExit = function(code) {
-      this._process.exitCode = code;
+      this._process.setExitCode(code);
       this._process.reallyExit();
       //System.exit( code );
     };
@@ -207,28 +207,28 @@ Number.isFinite = isFinite;
         // hack - posix doesn't let you pass null to get current
         // so instead, we pass an arbitrary value to get the
         // current umask, then reset to current.
-        var orig = this._process.posix.umask(022);
-        this._process.posix.umask(orig);
+        var orig = this._process.getPosix().umask(022);
+        this._process.getPosix().umask(orig);
         return orig;
       }
-      return this._process.posix.umask(mask);
+      return this._process.getPosix().umask(mask);
     };
 
     Object.defineProperty( this, "exitCode", {
       get: function() {
-        return this._process.exitCode;
+        return this._process.getExitCode();
       },
       set: function(v) {
-        this._process.exitCode = v;
+        this._process.setExitCode(v);
       }
     });
 
     Object.defineProperty( this, '_needImmediateCallback', {
       get: function() {
-        return this._process.needImmediateCallback;
+        return this._process.getNeedImmediateCallback();
       },
       set: function(v) {
-        this._process.needImmediateCallback = (v?true:false);
+        this._process.setNeedImmediateCallback(v?true:false);
       }
     });
 
@@ -236,7 +236,7 @@ Number.isFinite = isFinite;
       this._immediateCallback();
     }.bind(this) );
 
-    this._posix = this._process.posix;
+    this._posix = this._process.getPosix();
 
     this.jaropen = function(module, filename) {
       var result = this._process.jaropen(filename);

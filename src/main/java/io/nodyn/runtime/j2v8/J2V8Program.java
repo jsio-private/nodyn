@@ -40,7 +40,7 @@ public class J2V8Program implements Program {
 
 						@Override
 						public Object invoke(V8Object vo, V8Array va) {
-							return v8.executeScript(source);
+							return v8.executeScript(source, fileName, 0);
 						}
 						
 					}, "tmpfnc");
