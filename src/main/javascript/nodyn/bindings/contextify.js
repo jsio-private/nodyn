@@ -28,7 +28,7 @@ function ContextifyScript(script,options) {
 }
 
 ContextifyScript.prototype.runInThisContext = function() {
-  return this.runInContext( __nodyn.globalContext );
+  return this.runInContext( __nodyn.getGlobalContext() );
 };
 
 ContextifyScript.prototype.runInContext = function(context) {

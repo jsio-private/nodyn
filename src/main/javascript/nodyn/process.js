@@ -149,7 +149,7 @@ Number.isFinite = isFinite;
     this.execArgv = []
 
     this.argv = [];
-    this.argv.push( this._process.argv0 );
+    this.argv.push( this._process.getArgv0() );
 
     var execArgv = config.execArgv;
 

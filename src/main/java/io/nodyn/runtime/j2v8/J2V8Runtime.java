@@ -36,6 +36,7 @@ public class J2V8Runtime extends Nodyn {
 	private final io.js.J2V8Classes.Runtime engine;
 //    private final ScriptContext global;
 	private Program nativeRequire;
+	private Object context;
 
 	private static final String NATIVE_REQUIRE = "nodyn/_native_require.js";
 
@@ -47,6 +48,7 @@ public class J2V8Runtime extends Nodyn {
 		super(config, vertx, controlLifeCycle);
 		Thread.currentThread().setContextClassLoader(getConfiguration().getClassLoader());
 		engine = new io.js.J2V8Classes.Runtime("nodyn");
+		context = engine.getRuntime();
 
 		System.out.println("THREAD: " + Thread.currentThread().getName());
 
@@ -88,21 +90,21 @@ public class J2V8Runtime extends Nodyn {
 
 	@Override
 	public void makeContext(Object init) {
-//		j2v
-		engine.getRuntime().registerV8Executor(null, null);
+		this.context = init;
 		System.out.println("make context to " + init);
 		System.exit(-1);
 	}
 
 	@Override
 	public boolean isContext(Object ctx) {
-		return false;
+		return ctx == context;
 	}
 
 	@Override
 	public void handleThrowable(Throwable t) {
 		System.err.println(t);
 		t.printStackTrace();
+		System.exit(-1);
 	}
 
 	@Override
@@ -166,7 +168,7 @@ public class J2V8Runtime extends Nodyn {
 
 	@Override
 	public Object getGlobalContext() {
-		return engine.getRuntime();
+		return context;
 	}
 
 	private Program compileNative(String fileName) throws ScriptException {

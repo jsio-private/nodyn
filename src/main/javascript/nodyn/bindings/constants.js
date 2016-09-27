@@ -15,8 +15,8 @@
  */
 
 var nodyn = require('nodyn'),
-    FileStat = Packages.jnr.posix.FileStat,
-    ConstantSet = Packages.jnr.constants.ConstantSet;
+    FileStat = ClassHelpers.getClass("jnr.posix.FileStat"),
+    ConstantSet = ClassHelpers.getClass("jnr.constants.ConstantSet");
 
 module.exports.S_IFIFO = FileStat.S_IFIFO;  // named pipe (fifo)
 module.exports.S_IFCHR = FileStat.S_IFCHR;  // character special
