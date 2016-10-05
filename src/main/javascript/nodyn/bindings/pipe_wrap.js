@@ -23,8 +23,8 @@ var TCP = process.binding( 'tcp_wrap').TCP;
 var PipeWrap =  ClassHelpers.getClass("io.nodyn.pipe.PipeWrap");
 
 function Pipe(ipc) {
-  this._ipc = ipc;
-  this._pipe = new PipeWrap( process._process, ipc );
+  this._ipc = !!ipc;
+  this._pipe = new PipeWrap( process._process, this._ipc );
   if ( ipc ) {
     this._pipe.on( 'dataWithHandle', Pipe.prototype._onDataWithHandle.bind(this) );
   }

@@ -155,7 +155,7 @@ public class EventLoop implements RefCounted {
         --this.counter;
         this.handles.remove(handle);
         if (this.counter == 0) {
-            doShutdown();
+//            doShutdown();
         }
     }
 

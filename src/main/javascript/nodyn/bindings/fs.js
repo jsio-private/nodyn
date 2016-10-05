@@ -235,7 +235,6 @@ binding.read = function(fd, buffer, offset, length, position, callback) {
       if ( position && position !== -1 ) {
         bytes = Fs.pread(posix, fd, buffer._rawBuffer(), offset, length, position);
       } else {
-		print("read fd ", typeof fd, " rwaBuffer ", typeof buffer._rawBuffer(), " offset ", typeof offset, " length ", typeof length);
         bytes = Fs.read(posix, fd, buffer._rawBuffer(), offset, length);
       }
       blocking.unblock(function() {
@@ -246,7 +245,7 @@ binding.read = function(fd, buffer, offset, length, position, callback) {
     if ( position && position !== -1 ) {
       bytes = Fs.pread(posix, fd, buffer._rawBuffer(), offset, length, position);
     } else {
-		print("read fd ", typeof fd, " rwaBuffer ", typeof buffer._rawBuffer(), " offset ", typeof offset, " length ", typeof length);
+		print("2 asdklmaslkdmalksmd ", fd, " that was fd, now tostring: ", buffer);
       bytes = Fs.read(posix, fd, buffer._rawBuffer(), offset, length);
     }
     if (bytes === -1) throw posixError(fd, 'read');
@@ -366,7 +365,7 @@ binding.fdatasync = function(fd) {
 function posixError(path, syscall) {
   var errno = posix.errno(),
       errEnum = Errno.valueOf(errno),
-      e = new Error(errEnum.description());
+      e = new Error(errEnum ? errEnum.description() : "invalid errno " + errno);
 
   e.errno   = errno;
   e.path    = path;

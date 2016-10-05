@@ -16,6 +16,7 @@
 
 package io.nodyn.fs;
 
+import com.eclipsesource.v8.V8Object;
 import java.nio.ByteBuffer;
 import jnr.posix.POSIX;
 
@@ -23,15 +24,19 @@ import jnr.posix.POSIX;
  * @author Lance Ball
  */
 public class Fs {
-    public static int read(POSIX posix, int fd, ByteBuffer buf, int offset, int length) {
-        byte[] input = new byte[length];
-        int read = posix.read(fd, input, length);
-        if (read != -1) {
-            buf.position(offset);
-            buf.put(input, offset, read);
-            buf.position(Math.max(buf.position(), offset + read));
-        }
-        return read;
+	
+	//V8Object was originally a ByteBuffer. JS gives it a regular JS Buffer, but Java needs a ByteBuf. TODO fix
+    public static int read(POSIX posix, int fd, V8Object buf, int offset, int length) {
+		System.out.println("read");
+		return -1;
+//        byte[] input = new byte[length];
+//        int read = posix.read(fd, input, length);
+//        if (read != -1) {
+//            buf.position(offset);
+//            buf.put(input, offset, read);
+//            buf.position(Math.max(buf.position(), offset + read));
+//        }
+//        return read;
     }
 
     public static int pread(POSIX posix, int fd, ByteBuffer buf, int offset, int length, int position) {

@@ -81,6 +81,6 @@ function jnrConstants(name) {
   var iter = constants.iterator();
   while (iter.hasNext()) {
     var e = iter.next();
-    module.exports[e.name()] = constants.getValue(e.name());
+    module.exports[e.name()] = e.intValue();
   }
 }

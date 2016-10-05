@@ -4,8 +4,6 @@ import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Function;
 import com.eclipsesource.v8.V8Object;
-import com.eclipsesource.v8.V8ScriptException;
-import com.eclipsesource.v8.V8Value;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import io.js.J2V8Classes.Utils;
@@ -17,14 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.vertx.java.core.Vertx;
 
-import javax.script.ScriptContext;
 import javax.script.ScriptException;
-import org.dynjs.runtime.JSFunction;
 import org.vertx.java.core.VertxFactory;
 
 /**
@@ -49,14 +44,14 @@ public class J2V8Runtime extends Nodyn {
 		Thread.currentThread().setContextClassLoader(getConfiguration().getClassLoader());
 		engine = new io.js.J2V8Classes.Runtime("nodyn");
 		context = engine.getRuntime();
-
-		System.out.println("THREAD: " + Thread.currentThread().getName());
+		
+		Logger.getLogger("Runtime-nodyn").setLevel(Level.OFF);
+		Logger.getLogger("ClassGenerator").setLevel(Level.OFF);
+		Logger.getLogger("Utils").setLevel(Level.OFF);
 
 		try {
 			nativeRequire = compileNative(NATIVE_REQUIRE);
 			nativeRequire.execute(engine.getRuntime());
-
-			System.out.println("done executing nativeRequire");
 		} catch (Exception ex) {
 			Logger.getLogger(J2V8Runtime.class.getName()).log(Level.SEVERE, "Failed to load " + NATIVE_REQUIRE, ex);
 			System.exit(255);
@@ -141,14 +136,6 @@ public class J2V8Runtime extends Nodyn {
 			
 			V8Object returnedProcess = (V8Object) processFunction.call(v8, new V8Array(v8).push(jsProcess));
 			nodeFunction.call(v8, new V8Array(v8).push(returnedProcess));
-//			
-//			V8Array args = new V8Array(v8);
-//			args.add("_process", (V8Value) processFunction.call(v8, new V8Array(v8)));
-//			nodeFunction.call(v8, args);
-//			
-//			System.out.println("done magic");
-
-			System.out.println("Done invoke the node function");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
