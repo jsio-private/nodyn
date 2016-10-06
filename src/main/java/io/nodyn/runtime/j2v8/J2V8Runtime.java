@@ -45,9 +45,9 @@ public class J2V8Runtime extends Nodyn {
 		engine = new io.js.J2V8Classes.Runtime("nodyn");
 		context = engine.getRuntime();
 		
-		Logger.getLogger("Runtime-nodyn").setLevel(Level.OFF);
-		Logger.getLogger("ClassGenerator").setLevel(Level.OFF);
-		Logger.getLogger("Utils").setLevel(Level.OFF);
+//		Logger.getLogger("Runtime-nodyn").setLevel(Level.OFF);
+//		Logger.getLogger("ClassGenerator").setLevel(Level.OFF);
+//		Logger.getLogger("Utils").setLevel(Level.OFF);
 
 		try {
 			nativeRequire = compileNative(NATIVE_REQUIRE);

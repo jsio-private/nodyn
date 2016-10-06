@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
+var Buffer = ClassHelpers.getClass('io.nodyn.buffer.Buffer');
+
 module.exports.setupBufferJS = function(target, internal) {
     module.exports.createBuffer = function(byteBuffer) {
     var b = new target(byteBuffer.position());
-    ClassHelpers.getClass('io.nodyn.buffer.Buffer').inject( b, byteBuffer );
+    Buffer.inject( b, byteBuffer );
     return b;
   };
 
   module.exports.extractBuffer = function(obj) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').extract(obj);
+    return Buffer.extract(obj);
   };
 
   module.exports.extractByteArray = function(obj) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').extractByteArray(obj);
+    return Buffer.extractByteArray(obj);
   };
 
   // ----------------------------------------
@@ -36,27 +38,27 @@ module.exports.setupBufferJS = function(target, internal) {
   // Slice
 
   target.prototype.asciiSlice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').asciiSlice( this, start, end );
+    return Buffer.asciiSlice( this, start, end );
   };
 
   target.prototype.base64Slice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').base64Slice( this, start, end);
+    return Buffer.base64Slice( this, start, end);
   };
 
   target.prototype.binarySlice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').binarySlice( this, start, end);
+    return Buffer.binarySlice( this, start, end);
   };
 
   target.prototype.hexSlice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').hexSlice( this, start, end );
+    return Buffer.hexSlice( this, start, end );
   };
 
   target.prototype.ucs2Slice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').ucs2Slice( this, start, end );
+    return Buffer.ucs2Slice( this, start, end );
   };
 
   target.prototype.utf8Slice = function(start, end) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').utf8Slice( this, start, end );
+    return Buffer.utf8Slice( this, start, end );
   };
 
   // Write
@@ -64,7 +66,7 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.asciiWrite = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').asciiWrite( this, str, offset, len );
+    var l = Buffer.asciiWrite( this, str, offset, len );
     Buffer._charsWritten = l;
     return l;
   };
@@ -72,7 +74,7 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.base64Write = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').base64Write( this, str, offset, len );
+    var l = Buffer.base64Write( this, str, offset, len );
     Buffer._charsWritten = len;
     return l;
   };
@@ -80,7 +82,7 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.binaryWrite = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').binaryWrite( this, str, offset, len );
+    var l = Buffer.binaryWrite( this, str, offset, len );
     Buffer._charsWritten = l;
     return l;
   };
@@ -88,7 +90,7 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.hexWrite = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').hexWrite( this, str, offset, len );
+    var l = Buffer.hexWrite( this, str, offset, len );
     Buffer._charsWritten = l * 2;
     return;
   };
@@ -96,7 +98,7 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.ucs2Write = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').ucs2Write( this, str, offset, len );
+    var l = Buffer.ucs2Write( this, str, offset, len );
     Buffer._charsWritten = l / 2;
     return l;
   };
@@ -104,41 +106,41 @@ module.exports.setupBufferJS = function(target, internal) {
   target.prototype.utf8Write = function(str, offset, len) {
     offset = offset || 0;
     len    = len    || this.length;
-    var l = ClassHelpers.getClass('io.nodyn.buffer.Buffer').utf8Write(this, str, offset, len);
+    var l = Buffer.utf8Write(this, str, offset, len);
     Buffer._charsWritten = l[0];
     return l[1];
   };
 
   target.prototype.readDoubleBE = function(offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').readDoubleBE( this, offset );
+    return Buffer.readDoubleBE( this, offset );
   };
 
   target.prototype.readDoubleLE = function(offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').readDoubleLE( this, offset );
+    return Buffer.readDoubleLE( this, offset );
   };
 
   target.prototype.readFloatBE = function(offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').readFloatBE( this, offset );
+    return Buffer.readFloatBE( this, offset );
   };
 
   target.prototype.readFloatLE = function(offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').readFloatLE( this, offset );
+    return Buffer.readFloatLE( this, offset );
   };
 
   target.prototype.writeDoubleBE = function(value, offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').writeDoubleBE( this, value, offset );
+    return Buffer.writeDoubleBE( this, value, offset );
   };
 
   target.prototype.writeDoubleLE = function(value, offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').writeDoubleLE( this, value, offset );
+    return Buffer.writeDoubleLE( this, value, offset );
   };
 
   target.prototype.writeFloatBE = function(value, offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').writeFloatBE( this, value, offset );
+    return Buffer.writeFloatBE( this, value, offset );
   };
 
   target.prototype.writeFloatLE = function(value, offset, noAssert) {
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').writeFloatLE( this, value, offset );
+    return Buffer.writeFloatLE( this, value, offset );
   };
 
   // ----------------------------------------
@@ -168,7 +170,7 @@ module.exports.setupBufferJS = function(target, internal) {
       throw new RangeError( "targetStart out of bounds" );
     }
 
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').copy( this, target, targetStart, sourceStart, sourceEnd );
+    return Buffer.copy( this, target, targetStart, sourceStart, sourceEnd );
   };
 
   target.prototype.fill = function(value, offset, end) {
@@ -178,7 +180,7 @@ module.exports.setupBufferJS = function(target, internal) {
     if ( end > this.length ) {
       throw new RangeError( "end out of bounds" );
     }
-    return ClassHelpers.getClass('io.nodyn.buffer.Buffer').fill( this, value, offset, end );
+    return Buffer.fill( this, value, offset, end );
   };
 
   // ----------------------------------------

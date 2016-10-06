@@ -245,7 +245,6 @@ binding.read = function(fd, buffer, offset, length, position, callback) {
     if ( position && position !== -1 ) {
       bytes = Fs.pread(posix, fd, buffer._rawBuffer(), offset, length, position);
     } else {
-		print("2 asdklmaslkdmalksmd ", fd, " that was fd, now tostring: ", buffer);
       bytes = Fs.read(posix, fd, buffer._rawBuffer(), offset, length);
     }
     if (bytes === -1) throw posixError(fd, 'read');

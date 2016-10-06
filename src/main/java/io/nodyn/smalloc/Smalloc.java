@@ -16,6 +16,7 @@
 
 package io.nodyn.smalloc;
 
+import com.eclipsesource.v8.V8Object;
 import io.nodyn.buffer.Buffer;
 import java.nio.ByteBuffer;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
@@ -25,18 +26,18 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
  */
 public class Smalloc {
 
-    public static Object alloc(ScriptObjectMirror obj, int size) throws Exception {
+    public static Object alloc(V8Object obj, int size) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(size);
         Buffer.inject(obj, buffer);
         return obj;
     }
 
-    public static Object truncate(ScriptObjectMirror obj, int len) {
+    public static Object truncate(V8Object obj, int len) {
         // we really have nothing to do?
         return obj;
     }
 
-    public static Object sliceOnto(ScriptObjectMirror src, ScriptObjectMirror dest, int start, int end) {
+    public static Object sliceOnto(V8Object src, V8Object dest, int start, int end) {
         ByteBuffer srcBuf = Buffer.extract(src);
         int len = end - start;
         
